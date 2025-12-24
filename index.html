@@ -132,121 +132,121 @@
 </head>
 <body>
 
-  <div class="intro" id="intro">
-    <div class="intro-card">
-      <h1>🎄 A Little Christmas Puzzle 🎄</h1>
-      <p>Ten questions. One surprise.</p>
-      <p>I made this just for you ❤️</p>
-      <button onclick="startGame()">I'm Ready ✨</button>
-    </div>
+<div class="intro" id="intro">
+  <div class="intro-card">
+    <h1>🎄 A Little Christmas Puzzle 🎄</h1>
+    <p>Ten questions. One surprise.</p>
+    <p>I made this just for you ❤️</p>
+    <button onclick="startGame()">I'm Ready ✨</button>
   </div>
+</div>
 
-  <div class="card">
-    <button class="music-btn" onclick="toggleMusic()">🎶</button>
-    <div class="progress"><div class="progress-bar" id="progress"></div></div>
-    <h1 id="title">Christmas Puzzle</h1>
-    <p id="clue"></p>
+<div class="card">
+  <button class="music-btn" onclick="toggleMusic()">🎶</button>
+  <div class="progress"><div class="progress-bar" id="progress"></div></div>
+  <h1 id="title">Christmas Puzzle</h1>
+  <p id="clue"></p>
 
-    <input id="answer" type="text" placeholder="Enter answer" />
-    <button onclick="checkAnswer()">Submit</button>
+  <input id="answer" type="text" placeholder="Enter answer" />
+  <button onclick="checkAnswer()">Submit</button>
 
-    <div id="message"></div>
-  </div>
+  <div id="message"></div>
+</div>
 
-  <audio id="music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/12/19/audio_2e1e7d3b50.mp3?filename=soft-christmas-ambient-12599.mp3" type="audio/mpeg">
-  </audio>
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/12/19/audio_2e1e7d3b50.mp3?filename=soft-christmas-ambient-12599.mp3" type="audio/mpeg">
+</audio>
 
-  <script>
-    const stages = [
-      { clue: "1️⃣ Which year was the Crying Child incident?", answer: "1983" },
-      { clue: "2️⃣ Who is the prettiest Resident Evil character? (First name only)", answer: "leon" },
-      { clue: "3️⃣ In Jujutsu Kaisen, Gojo is the strongest sorcerer because of which technique?", answer: "limitless" },
-      { clue: "4️⃣ In Bleach, what is the name of Ichigo Kurosaki’s Zanpakutō?", answer: "zangetsu" },
-      { clue: "5️⃣ In Gravity Falls, Bill Cipher’s ultimate evil plan is called what?", answer: "weirdmageddon" },
-      { clue: "6️⃣ In Death Note, Light and L play what game against each other in college?", answer: "tennis" },
-      { clue: "7️⃣ What is the name of the serial murder case L worked on previously with Ray Penber’s fiancée?", answer: "bb murder case" },
-      { clue: "8️⃣ Which Demon Slayer character originally said: BURN! BURN! SET YOUR HEART ABLAZE! (Last name only)", answer: "rengoku" },
-      { clue: "9️⃣ In Jujutsu Kaisen, what color are Gojo’s eyes when revealed?", answer: "blue" },
-      { clue: "🔟 In Bryce's opinion, what is the scariest FNAF game? (Just the number)", answer: "4", final: true }
-    ];
+<script>
+const stages = [
+  { clue: "1️⃣ Which year was the Crying Child incident?", answer: "1983" },
+  { clue: "2️⃣ Who is the prettiest Resident Evil character? (First name only)", answer: "leon" },
+  { clue: "3️⃣ In Jujutsu Kaisen, Gojo is the strongest sorcerer because of which technique?", answer: "limitless" },
+  { clue: "4️⃣ In Bleach, what is the name of Ichigo Kurosaki’s Zanpakutō?", answer: "zangetsu" },
+  { clue: "5️⃣ In Gravity Falls, Bill Cipher’s ultimate evil plan is called what?", answer: "weirdmageddon" },
+  { clue: "6️⃣ In Death Note, Light and L play what game against each other in college?", answer: "tennis" },
+  { clue: "7️⃣ What is the name of the serial murder case L worked on previously with Ray Penber’s fiancée?", answer: "bb murder case" },
+  { clue: "8️⃣ Which Demon Slayer character originally said: BURN! BURN! SET YOUR HEART ABLAZE! (Last name only)", answer: "rengoku" },
+  { clue: "9️⃣ In Jujutsu Kaisen, what color are Gojo’s eyes when revealed?", answer: "blue" },
+  { clue: "🔟 In Bryce's opinion, what is the scariest FNAF game? (Just the number)", answer: "4", final: true }
+];
 
-    let stage = 0;
+let stage = 0;
 
-    function normalize(text) {
-      return text.toLowerCase().trim().replace(/\s+/g, ' ');
+function normalize(text) {
+  return text.toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+function startGame() {
+  document.getElementById('intro').style.display = 'none';
+  updateUI();
+}
+
+function updateUI() {
+  const data = stages[stage];
+  document.getElementById('clue').innerText = data.clue;
+  document.getElementById('progress').style.width = (stage / stages.length) * 100 + '%';
+}
+
+function checkAnswer() {
+  const input = document.getElementById('answer');
+  const message = document.getElementById('message');
+
+  if (normalize(input.value) === stages[stage].answer) {
+    sparkle();
+    message.innerHTML = '<div class="success">Correct ✨</div>';
+    input.value = '';
+    stage++;
+
+    if (stage >= stages.length || stages[stage - 1].final) {
+      document.getElementById('title').innerText = '🎉 Congrats, You Won! 🎉';
+      document.getElementById('progress').style.width = '100%';
+      input.style.display = 'none';
+      document.getElementById('clue').innerHTML = `
+        <div class="final">
+          <p><strong>I love you, you are the world to me, and even though we aren't spending Christmas day together, always know there isn't a second that goes by where I'm not thinking about you.</strong></p>
+          <p>You will always be <em>"My better 50%"</em> — (that's an Outer Wilds reference 💫)</p>
+          <p><strong>I love you,</strong><br/>Bryce ❤️</p>
+          <hr style="margin:1.5rem 0; opacity:0.4;" />
+          <p><strong>Text me this phrase to unlock your gift:</strong></p>
+          <p style="font-size:1.2rem; color:#ffc107;"><em>This song is new to me, but I'm glad to be a part of it.</em></p>
+        </div>
+      `;
+      return;
     }
 
-    function startGame() {
-      document.getElementById('intro').style.display = 'none';
-      updateUI();
-    }
+    updateUI();
+  } else {
+    message.innerHTML = '<div class="error">Not quite — try again ❤️</div>';
+  }
+}
 
-    function updateUI() {
-      const data = stages[stage];
-      document.getElementById('clue').innerText = data.clue;
-      document.getElementById('progress').style.width = (stage / stages.length) * 100 + '%';
-    }
+function sparkle() {
+  for (let i = 0; i < 6; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.innerText = '✨';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = '60vh';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1200);
+  }
+}
 
-    function checkAnswer() {
-      const input = document.getElementById('answer');
-      const message = document.getElementById('message');
+function toggleMusic() {
+  const music = document.getElementById('music');
+  music.paused ? music.play() : music.pause();
+}
 
-      if (normalize(input.value) === stages[stage].answer) {
-        sparkle();
-        message.innerHTML = '<div class="success">Correct ✨</div>';
-        input.value = '';
-        stage++;
-
-        if (stages[stage - 1].final) {
-          document.getElementById('title').innerText = '🎉 Congrats, You Won! 🎉';
-          document.getElementById('progress').style.width = '100%';
-          input.style.display = 'none';
-          document.getElementById('clue').innerHTML = `
-            <div class="final">
-              <p><strong>I love you, you are the world to me, and even though we aren't spending Christmas day together, always know there isn't a second that goes by where I'm not thinking about you.</strong></p>
-              <p>You will always be <em>"My better 50%"</em> — (that's an Outer Wilds reference 💫)</p>
-              <p><strong>I love you,</strong><br/>Bryce ❤️</p>
-              <hr style="margin:1.5rem 0; opacity:0.4;" />
-              <p><strong>Text me this phrase to unlock your gift:</strong></p>
-              <p style="font-size:1.2rem; color:#ffc107;"><em>This song is new to me, but I'm glad to be a part of it.</em></p>
-            </div>
-          `;
-          return;
-        }
-
-        updateUI();
-      } else {
-        message.innerHTML = '<div class="error">Not quite — try again ❤️</div>';
-      }
-    }
-
-    function sparkle() {
-      for (let i = 0; i < 6; i++) {
-        const s = document.createElement('div');
-        s.className = 'sparkle';
-        s.innerText = '✨';
-        s.style.left = Math.random() * 100 + 'vw';
-        s.style.top = '60vh';
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 1200);
-      }
-    }
-
-    function toggleMusic() {
-      const music = document.getElementById('music');
-      music.paused ? music.play() : music.pause();
-    }
-
-    for (let i = 0; i < 40; i++) {
-      const snow = document.createElement('div');
-      snow.className = 'snowflake';
-      snow.innerText = '❄';
-      snow.style.left = Math.random() * 100 + 'vw';
-      snow.style.animationDuration = 5 + Math.random() * 5 + 's';
-      snow.style.fontSize = 10 + Math.random() * 20 + 'px';
-      document.body.appendChild(snow);
-    }
-  </script>
+for (let i = 0; i < 40; i++) {
+  const snow = document.createElement('div');
+  snow.className = 'snowflake';
+  snow.innerText = '❄';
+  snow.style.left = Math.random() * 100 + 'vw';
+  snow.style.animationDuration = 5 + Math.random() * 5 + 's';
+  snow.style.fontSize = 10 + Math.random() * 20 + 'px';
+  document.body.appendChild(snow);
+}
+</script>
 </body>
 </html>
